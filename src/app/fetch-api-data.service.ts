@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 // delcaring the api url that will rpovide data for the client app
-const apiUrl = 'https://classic-movies.herokuapp.com/';
+const apiUrl = 'https://good-movies-origin.herokuapp.com/';
 @Injectable({
   providedIn: 'root'
 })
