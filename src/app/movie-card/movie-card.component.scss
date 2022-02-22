@@ -1,0 +1,30 @@
+.movies-list {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 6px;
+
+  .movie-img {
+    width: 450px;
+    height: 620px;
+    border-radius: 6px;
+  }
+}
+
+.movie-card {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-evenly;
+
+  mat-card {
+    margin-bottom: 2rem;
+  }
+
+  mat-card-subtitle {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+  }
+}
+
+mat-card-actions {
+  margin-left: 2.8rem;
+}

@@ -1,0 +1,35 @@
+<mat-toolbar>
+  <p class="nav-logo">classic movies</p>
+  <div>
+    <mat-list-item routerLinkActive="active current">
+      <a
+        matLine
+        routerLink="movies"
+        (click)="goToMoviesPage()"
+        style="margin-right: 15px; text-decoration: none"
+      >
+        movies
+      </a>
+    </mat-list-item>
+    <mat-list-item routerLinkActive="active current">
+      <a
+        matLine
+        routerLink="profile"
+        (click)="goToProfilePage()"
+        style="margin-right: 15px; text-decoration: none"
+      >
+        profile
+      </a>
+    </mat-list-item>
+    <mat-list-item routerLinkActive="active current">
+      <a
+        matLine
+        routerLink="logout"
+        (click)="logout()"
+        style="text-decoration: none"
+      >
+        logout
+      </a>
+    </mat-list-item>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,23 @@
+.nav-logo {
+  font-size: 2rem;
+  font-family: fantasy;
+  color: rgb(48, 90, 148);
+  margin: 10px;
+}
+
+mat-toolbar {
+  // border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  //grid-template-columns: repeat(1fr, 3);
+  mat-list-item {
+    padding-left: 3rem;
+
+    a {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: rgb(48, 90, 148);
+    }
+  }
+}
