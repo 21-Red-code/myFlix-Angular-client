@@ -1,0 +1,24 @@
+.main-page {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.main-page h1 {
+  margin-top: 13rem;
+  margin-bottom: 10rem;
+  font-size: 4rem;
+  color: #305a94;
+  font-family: fantasy;
+  letter-spacing: 3px;
+}
+
+.main-page button {
+  font-size: 1.3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 1rem;
+  padding-bottom: 4px;
+  background-color: #305a94;
+}
+/*# sourceMappingURL=welcome-page.component.css.map */

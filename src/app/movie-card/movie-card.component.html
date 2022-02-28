@@ -2,7 +2,7 @@
 <!-- let movie of movies; let i = index is: a forEach loop block  -->
 <app-navbar></app-navbar>
 <div class="movie-card">
-  <mat-card *ngFor="let movie of movies" class="movies-list">
+  <mat-card *ngFor="let movie of movies; let i = index" class="movies-list">
     <div class="movie-img-container">
       <img
         src="{{ movie.ImagePath }}"
@@ -58,10 +58,17 @@
       >
         Synopsis
       </button>
-      <mat-icon class="fav-icon" (click)="addToFavs(movie._id)">
-        favorite_border
-      </mat-icon>
+
+      <button (click)="toggleFavorite(movie)">
+        <mat-icon *ngIf="!favCheck(movie._id)" class="fav-icon">
+          favorite_border
+        </mat-icon>
+        <mat-icon *ngIf="favCheck(movie._id)" class="fav-icon">
+          favorite
+        </mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
-<!--  *ngIf="!favCheck(movie._id)"-->
+<!--  -->
+<!--  -->

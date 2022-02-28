@@ -15,10 +15,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class MovieCardComponent {
   movies: any[] = [];
+  FavMovies: any[] = [];
   username: any = localStorage.getItem('username');
   currentUser: any = null;
-  currentFavs: any = null;
+  currentFavs: any[] = [];
   isInFavs: boolean = false;
+
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
@@ -32,14 +34,24 @@ ngOnInit(): void {
   this.getCurrentUser();
 }
 
+  /**
+   * use API call to get the current user info
+   * @function getCurrentUser
+   * @return user's info and user's favorite movies list
+   */
 getCurrentUser(): void {
     this.fetchApiData.getUserProfile().subscribe((resp: any) => {
       this.currentUser = resp;
-      this.currentFavs = resp.Favorites;
+      this.currentFavs = resp.FavMovies;
       return (this.currentUser, this.currentFavs);
     });
   }
 
+/**
+ * use API call to get all the movies
+ * @function getMovies
+ * @return all the movies in json format
+ */
 getMovies(): void {
   this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
@@ -47,7 +59,12 @@ getMovies(): void {
       return this.movies;
     });
   }
-
+  
+  /**
+   * open a dialog to dispaly the current movie genre info
+   * @param Name {string}
+   * @param Description {string}
+   */
   openGenreDialog(
     Name: string,
     Description: string
@@ -61,6 +78,12 @@ getMovies(): void {
     });
   }
 
+  /**
+   * open a dialog to display the cureent movie description
+   * @param title {string}
+   * @param description {string}
+   * @button synopsis
+   */
   openDescriptionDialog(
     Title: string,
     Genre: string,
@@ -78,6 +101,13 @@ getMovies(): void {
     });
   }
 
+  /**
+   * open a dialog to display the current movie director biography
+   * @param name {string}
+   * @param bio {string}
+   * @param birth {string}
+   * @param death {string}
+   */
   openDirectorDialog(
     Name: string,
     Bio: string,
@@ -104,20 +134,33 @@ getMovies(): void {
     localStorage.clear();
   }
 
+  /**
+   * use API end-point to add user favorite movie
+   * @function addToFavs
+   * @param movieID {string}
+   * @param title {string}
+   * @returns movie id and two methods based on the response
+   */
   addToFavs(movieId: string): void {
     //checking if the title is already in favs
     if (this.currentFavs.filter(function (e: any) { return e._id === movieId; }).length > 0) {
-      this.snackBar.open('Already in your favorite list', 'OK', { duration: 1000 });
+      this.snackBar.open('Already in your favorite list', 'OK', { duration: 3000 });
       return
     } else {
       this.fetchApiData.addFavoriteMovies(movieId).subscribe((resp: any) => {
         this.getCurrentUser();
         this.ngOnInit();
-        this.snackBar.open('Added to your favorite list', 'OK', { duration: 1000 });
+        this.snackBar.open('Added to your favorite list', 'OK', { duration: 3000 });
       });
     }
   }
   
+  /**
+   * use API end-point to remove user favorite
+   * @function removeFromFavs
+   * @param MovieId {string}
+   * @returns updated user's data in json format
+   */
   removeFromFavs(movieId: string): void {
     this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((resp: any) => {
       this.snackBar.open('Removed from favs', 'OK', { duration: 2000 });
@@ -125,14 +168,29 @@ getMovies(): void {
       this.ngOnInit();
       2000
     });
-  }
+  } 
 
+  /**
+   * check if the movie is the user's favorite?
+   * @param movieId 
+   * @returns boolean
+   */
   favCheck(movieId: string): any {
-    let favIds = this.currentFavs.map(function (fav: any) { return fav._id });
+    let favIds = this.currentFavs.map((fav: any) => { return fav._id });
     if (favIds.includes(movieId)) {
       this.isInFavs = true;
       return this.isInFavs;
     };
   }
 
+  /**
+   * toggle add/remove user's favorite movie
+   * @Function add or remove a movie to/from user's favorite list 
+   * @param movie 
+   */
+  toggleFavorite(movie: any): void {
+    this.favCheck(movie._id)
+      ? this.removeFromFavs(movie._id)
+      : this.addToFavs(movie._id);
+  }
 }

@@ -1,0 +1,21 @@
+.main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  border: 2px solid #0062ff;
+}
+
+.main .fav-movies-section {
+  border: 2px solid #824dd3;
+  background: #62835b;
+  height: 200px !important;
+  width: 500px !important;
+}
+
+.main .user-info {
+  border: 2px solid red;
+}
+/*# sourceMappingURL=user-profile-card.component.css.map */

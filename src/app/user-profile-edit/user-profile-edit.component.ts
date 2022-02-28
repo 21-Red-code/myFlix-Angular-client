@@ -22,6 +22,14 @@ export class UserProfileEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * updates the user information in API
+   * @function editUserProfile
+   * @param Username {any}
+   * @param userProfile {any}
+   * @return an updated user in json format
+   * then stores it in localstorage. a popup message is displayed after successful updated
+   */
   editUserProfile(): void {
     this.fetchApiData.editUserProfile(this.userData).subscribe((res) => {
       this.dialogRef.close();

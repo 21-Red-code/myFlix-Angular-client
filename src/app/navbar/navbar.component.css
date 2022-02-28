@@ -1,0 +1,29 @@
+.nav-logo {
+  font-size: 2rem;
+  font-family: fantasy;
+  color: #305a94;
+  margin: 10px;
+}
+
+mat-toolbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+mat-toolbar mat-list-item {
+  padding-left: 3rem;
+}
+
+mat-toolbar mat-list-item a {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #305a94;
+}
+/*# sourceMappingURL=navbar.component.css.map */

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,OAAO,EAAE,IAAI;EACb,kBAAkB,EAAE,SAAS;EAC7B,eAAe,EAAE,YAAY;EAC7B,MAAM,EAAE,GAAG,CAAC,KAAK,CAAC,OAAe;CAYlC;;AAhBD,AAME,KANG,CAMH,mBAAmB,CAAC;EAClB,MAAM,EAAE,GAAG,CAAC,KAAK,CAAC,OAAiB;EACnC,UAAU,EAAE,OAAgB;EAC5B,MAAM,EAAE,gBAAgB;EACxB,KAAK,EAAG,gBAAgB;CACzB;;AAXH,AAaE,KAbG,CAaH,UAAU,CAAC;EACT,MAAM,EAAE,aAAa;CACtB",
+    "sources": [
+        "user-profile-card.component.scss"
+    ],
+    "names": [],
+    "file": "user-profile-card.component.css"
+}

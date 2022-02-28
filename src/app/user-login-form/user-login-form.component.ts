@@ -12,6 +12,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user-login-form.component.scss']
 })
 export class UserLoginFormComponent implements OnInit {
+  /**
+   * get input values from sign form then store it in loginData
+   */
 
   @Input() userData = { Username: '', Password: '' };
 
@@ -28,6 +31,9 @@ export class UserLoginFormComponent implements OnInit {
    * Send a request to login the user
    * Saves the token and username in localSotrage
    * Once logged in, re-route to movies page 
+   * @function loginUser
+   * @param loginData {object}
+   * @return user's data in json format
    */
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe((response) => {

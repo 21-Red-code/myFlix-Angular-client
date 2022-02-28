@@ -1,17 +1,12 @@
-.main {
-  display: grid;
-  grid-template-rows: auto auto;
-  justify-content: space-around;
-  border: 2px solid rgb(0, 98, 255);
 
-  .fav-movies-section {
-    border: 2px solid rgb(130, 77, 211);
-    background: rgb(98, 131, 91);
-    height: 200px !important;
-    width:  500px !important;
-  }
 
-  .user-info {
-    border: 2px solid red;
-  }
+mat-grid-list{
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+mat-grid-tile {
+  border: 2px solid green;
 }

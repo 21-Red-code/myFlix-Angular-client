@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "director-card.component.scss"
+    ],
+    "names": [],
+    "file": "director-card.component.css"
+}
