@@ -132,7 +132,7 @@ constructor(private http: HttpClient, private router: Router) { }
   deleteFavoriteMovies(MovieId: string): Observable<any> {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
-    return this.http.delete(apiUrl + `users/${username}/FavMovies/${MovieId}`, {
+    return this.http.put(apiUrl + `users/${username}/FavMovies/${MovieId}`, {}, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,

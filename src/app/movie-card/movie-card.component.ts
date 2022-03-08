@@ -161,27 +161,39 @@ getMovies(): void {
    * @param MovieId {string}
    * @returns updated user's data in json format
    */
-  removeFromFavs(movieId: string): void {
+  
+
+  removeFav(movieId: string): void {
     this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((resp: any) => {
       this.snackBar.open('Removed from favs', 'OK', { duration: 2000 });
-      this.getCurrentUser();
-      this.ngOnInit();
-      2000
     });
-  } 
+    this.ngOnInit();
+  }
+  // removeFromFavs(movieId: string): void {
+  //   this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((resp: any) => {
+  //     this.snackBar.open('Removed from favs', 'OK', { duration: 2000 });
+  //     this.getCurrentUser();
+  //     this.ngOnInit();
+  //     2000
+  //   });
+  // } 
 
   /**
    * check if the movie is the user's favorite?
    * @param movieId 
    * @returns boolean
    */
+
   favCheck(movieId: string): any {
-    let favIds = this.currentFavs.map((fav: any) => { return fav._id });
-    if (favIds.includes(movieId)) {
-      this.isInFavs = true;
-      return this.isInFavs;
-    };
+    return this.currentFavs.some((id) => id === movieId);
   }
+  // favCheck(movieId: string): any {
+  //   let favIds = this.currentFavs.map((fav: any) => { return fav._id });
+  //   if (favIds.includes(movieId)) {
+  //     this.isInFavs = true;
+  //     return this.isInFavs;
+  //   };
+  // }
 
   /**
    * toggle add/remove user's favorite movie
@@ -190,7 +202,7 @@ getMovies(): void {
    */
   toggleFavorite(movie: any): void {
     this.favCheck(movie._id)
-      ? this.removeFromFavs(movie._id)
+      ? this.removeFav(movie._id)
       : this.addToFavs(movie._id);
   }
 }

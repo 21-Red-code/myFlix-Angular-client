@@ -14,7 +14,8 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 })
 export class UserProfileCardComponent implements OnInit {
   user: any = localStorage.getItem('username');
-  favorite: any[] = [];
+  favorite: any = [];
+  movies: any[] = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -26,6 +27,15 @@ export class UserProfileCardComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser();
     this.getFavs();
+    this.getMovies();
+  }
+
+  getMovies(): void {
+    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
+      this.movies = resp;
+      console.log(this.movies);//all movies
+      return this.movies;
+    });
   }
 
   /**
@@ -34,12 +44,12 @@ export class UserProfileCardComponent implements OnInit {
    * @param 
    * @return user's data in json format
    */
-  getCurrentUser(): void {
+  getCurrentUser() {
     this.fetchApiData.getUserProfile().subscribe((resp: any) => {
       this.user = resp;
       //this.favorite = resp.FavMovies;
-      console.log(this.user)
-      return (this.user, this.favorite);
+      console.log("---Get Current User---"  ,this.user)
+      return (this.user);
     });
   }
 
@@ -56,43 +66,33 @@ export class UserProfileCardComponent implements OnInit {
   /**
    * get user's FavoriteMovies from the user's data
    */
-  getFavs() {
-    const user = localStorage.getItem('user');
+  getFavs(): void {
     this.fetchApiData.getUserProfile().subscribe((resp: any) => {
+      this.user = resp;
       this.favorite = resp.FavMovies;
-      console.log(this.favorite);
-    return this.favorite;
+      this.fetchApiData.getAllMovies().subscribe((response: any) => {
+        this.movies = response;
+        this.favorite = this.movies.filter((movie: any) => {
+          return this.favorite.includes(movie._id);
+        });
+      });
+      console.log("Get-Fav response ", this.favorite);
+    return (this.favorite);
     });
   }
 
-  // getFavs() {
-  //   let movies: any[] = [];
-  //   this.fetchApiData.getAllMovies().subscribe((res: any) => {
-  //     movies = res;
-  //     movies.forEach((movie: any) => {
-  //       if (this.user.favorite.includes(movie._id)) {
-  //         this.favorite.push(movie);
-  //       }
-  //     });
-  //   });
-  //   return this.favorite;
-  // }
-  
   /**
    * use API end-point to remove user favorite
    * @function removeFav
    * @param movieId {string}
    * @returns updated user's favorite list in json format
    */
+
   removeFav(movieId: string): void {
-    this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((res: any) => {
-      this.snackBar.open('Removed from favorite', 'OK', {
-        duration: 2000,
-      });
-      this.ngOnInit();
-      // console.log(this.favorite);
-      return this.favorite;
-    })
+    this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((resp: any) => {
+      this.snackBar.open('Removed from favs', 'OK', { duration: 2000 });
+    });
+    this.ngOnInit();
   }
 
   /**
