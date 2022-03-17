@@ -1,3 +1,9 @@
+/**
+ * The UserProfileCardComponent is used to render a mat card displaying the user's profile details. This includes
+ * action buttons to edit their profile and delete their account from the application.
+ * @module UserProfileCardComponent
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,7 +16,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 @Component({
   selector: 'app-user-profile-card',
   templateUrl: './user-profile-card.component.html',
-  styleUrls: ['./user-profile-card.component.scss']
+  styleUrls: ['./user-profile-card.component.scss'],
 })
 export class UserProfileCardComponent implements OnInit {
   user: any = localStorage.getItem('username');
@@ -22,7 +28,7 @@ export class UserProfileCardComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getCurrentUser();
@@ -33,7 +39,7 @@ export class UserProfileCardComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      console.log(this.movies);//all movies
+      console.log(this.movies); //all movies
       return this.movies;
     });
   }
@@ -41,15 +47,15 @@ export class UserProfileCardComponent implements OnInit {
   /**
    * call API end-point to get the current user's information
    * @function getCurrentUser
-   * @param 
+   * @param
    * @return user's data in json format
    */
   getCurrentUser() {
     this.fetchApiData.getUserProfile().subscribe((resp: any) => {
       this.user = resp;
       //this.favorite = resp.FavMovies;
-      console.log("---Get Current User---"  ,this.user)
-      return (this.user);
+      console.log('---Get Current User---', this.user);
+      return this.user;
     });
   }
 
@@ -59,7 +65,7 @@ export class UserProfileCardComponent implements OnInit {
    */
   openEditUserProfile(): void {
     this.dialog.open(UserProfileEditComponent, {
-      width: '500px'
+      width: '500px',
     });
   }
 
@@ -76,8 +82,8 @@ export class UserProfileCardComponent implements OnInit {
           return this.favorite.includes(movie._id);
         });
       });
-      console.log("Get-Fav response ", this.favorite);
-    return (this.favorite);
+      console.log('Get-Fav response ', this.favorite);
+      return this.favorite;
     });
   }
 
@@ -104,9 +110,11 @@ export class UserProfileCardComponent implements OnInit {
   deleteProfile(): void {
     if (confirm('Are you sure? This cannot be undone.')) {
       this.router.navigate(['welcome']).then(() => {
-        this.snackBar.open('Your account was deleted', 'OK', {duration: 2000});
+        this.snackBar.open('Your account was deleted', 'OK', {
+          duration: 2000,
+        });
       });
-      this.router.navigate(['welcome'])
+      this.router.navigate(['welcome']);
       this.fetchApiData.deleteUserProfile().subscribe(() => {
         localStorage.clear();
       });

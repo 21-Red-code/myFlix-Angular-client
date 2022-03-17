@@ -1,3 +1,9 @@
+/**
+ * The UserProfileEditComponent is used to render a mat dialog containing a form where the
+ * user can edit their profile details.
+ * @module UserProfileEditComponent
+ */
+
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,7 +13,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 @Component({
   selector: 'app-user-profile-edit',
   templateUrl: './user-profile-edit.component.html',
-  styleUrls: ['./user-profile-edit.component.scss']
+  styleUrls: ['./user-profile-edit.component.scss'],
 })
 export class UserProfileEditComponent implements OnInit {
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
@@ -17,10 +23,9 @@ export class UserProfileEditComponent implements OnInit {
     public dialogRef: MatDialogRef<UserProfileEditComponent>,
     public snackBar: MatSnackBar,
     public router: Router
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   /**
    * updates the user information in API
@@ -31,19 +36,25 @@ export class UserProfileEditComponent implements OnInit {
    * then stores it in localstorage. a popup message is displayed after successful updated
    */
   editUserProfile(): void {
-    this.fetchApiData.editUserProfile(this.userData).subscribe((res) => {
-      this.dialogRef.close();
-      window.location.reload();
-      localStorage.setItem('username', res.Username)
-      console.log(res)
-      this.snackBar.open(this.userData.Username, 'Successfully updated user details!', {
-        duration: 3000
-      });
-    }, (res) => {
-      this.snackBar.open(res, 'OK', {
-        duration: 3000
-      });
-    })
+    this.fetchApiData.editUserProfile(this.userData).subscribe(
+      (res) => {
+        this.dialogRef.close();
+        window.location.reload();
+        localStorage.setItem('username', res.Username);
+        console.log(res);
+        this.snackBar.open(
+          this.userData.Username,
+          'Successfully updated user details!',
+          {
+            duration: 3000,
+          }
+        );
+      },
+      (res) => {
+        this.snackBar.open(res, 'OK', {
+          duration: 3000,
+        });
+      }
+    );
   }
-
 }

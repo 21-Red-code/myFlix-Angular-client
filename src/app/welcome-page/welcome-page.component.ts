@@ -1,3 +1,10 @@
+/**
+ * The WelcomePageComponent is used to render a welcome message for users. It includes
+ * action buttons for registration and logging in. Clicking the relevant button opens a mat dialog containing
+ * the component responsible for handling that process.
+ * @module WelcomePageComponent
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { UserLoginFormComponent } from '../user-login-form/user-login-form.component';
 import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
@@ -6,12 +13,11 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.scss']
+  styleUrls: ['./welcome-page.component.scss'],
 })
 export class WelcomePageComponent implements OnInit {
-  constructor(public dialog: MatDialog) { }
-  ngOnInit(): void {
-  }
+  constructor(public dialog: MatDialog) {}
+  ngOnInit(): void {}
 
   /**
    * open a dialog to display registration form
@@ -19,7 +25,7 @@ export class WelcomePageComponent implements OnInit {
    */
   openUserRegistrationDialog(): void {
     this.dialog.open(UserRegistrationFormComponent, {
-      width: '280px'
+      width: '280px',
     });
   }
 
@@ -29,7 +35,7 @@ export class WelcomePageComponent implements OnInit {
    */
   openUserLoginDialog(): void {
     this.dialog.open(UserLoginFormComponent, {
-      width: '280px'
+      width: '280px',
     });
   }
 }

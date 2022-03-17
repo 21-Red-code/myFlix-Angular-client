@@ -1,3 +1,14 @@
+/**
+ * The MovieCardComponent is used to display the data retrieved from the movies collection of the
+ * movie-api database. The data is looped through using the ngFor directive and each movie is rendered as
+ * a mat card in the template. The cards display the title, director and an image of the movie and contain
+ * buttons that can be opened to display dialogs with further information about the director or genre,
+ * or a synopsis. Movies can be added to or removed from favourites by clicking on a heart icon contained
+ * in the top right corner of each card. The heart colour toggles accordingly to reflect the movie's status.
+ *
+ * @module MovieCardComponent
+ */
+
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FetchApiDataService } from '../fetch-api-data.service';
@@ -11,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+  styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent {
   movies: any[] = [];
@@ -26,62 +37,63 @@ export class MovieCardComponent {
     public dialog: MatDialog,
     public router: Router,
     public snackBar: MatSnackBar
-    ) { }
+  ) {}
 
   // inline Annotation for the return, which is void(None)
-ngOnInit(): void {
-  this.getMovies();
-  this.getCurrentUser();
-}
+  /**
+   * Calls the getMovies and getCurrentUser methods as soon as the component loads so that
+   * the data can be used to populate the template.
+   */
+  ngOnInit(): void {
+    this.getMovies();
+    this.getCurrentUser();
+  }
 
   /**
    * use API call to get the current user info
    * @function getCurrentUser
    * @return user's info and user's favorite movies list
    */
-getCurrentUser(): void {
+  getCurrentUser(): void {
     this.fetchApiData.getUserProfile().subscribe((resp: any) => {
       this.currentUser = resp;
       this.currentFavs = resp.FavMovies;
-      return (this.currentUser, this.currentFavs);
+      return this.currentUser, this.currentFavs;
     });
   }
 
-/**
- * use API call to get all the movies
- * @function getMovies
- * @return all the movies in json format
- */
-getMovies(): void {
-  this.fetchApiData.getAllMovies().subscribe((resp: any) => {
+  /**
+   * use API call to get all the movies
+   * @function getMovies
+   * @return all the movies in json format
+   */
+  getMovies(): void {
+    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
       console.log(this.movies);
       return this.movies;
     });
   }
-  
+
   /**
    * open a dialog to dispaly the current movie genre info
    * @param Name {string}
    * @param Description {string}
    */
-  openGenreDialog(
-    Name: string,
-    Description: string
-  ): void {
+  openGenreDialog(Name: string, Description: string): void {
     this.dialog.open(GenreCardComponent, {
       data: {
         Name,
         Description,
       },
-      width: '500px'
+      width: '500px',
     });
   }
 
   /**
-   * open a dialog to display the cureent movie description
-   * @param title {string}
-   * @param description {string}
+   * open a dialog to display the current movie description
+   * @param Title {string}
+   * @param Description {string}
    * @button synopsis
    */
   openDescriptionDialog(
@@ -95,18 +107,18 @@ getMovies(): void {
         Title,
         Genre,
         Description,
-        Year
+        Year,
       },
-      width: '500px'
+      width: '500px',
     });
   }
 
   /**
    * open a dialog to display the current movie director biography
-   * @param name {string}
-   * @param bio {string}
-   * @param birth {string}
-   * @param death {string}
+   * @param Name {string}
+   * @param Bio {string}
+   * @param Birth {string}
+   * @param Death {string}
    */
   openDirectorDialog(
     Name: string,
@@ -119,9 +131,9 @@ getMovies(): void {
         Name,
         Bio,
         Birth,
-        Death
+        Death,
       },
-      width: '500px'
+      width: '500px',
     });
   }
 
@@ -137,31 +149,37 @@ getMovies(): void {
   /**
    * use API end-point to add user favorite movie
    * @function addToFavs
-   * @param movieID {string}
-   * @param title {string}
+   * @param movieId {string}
    * @returns movie id and two methods based on the response
    */
   addToFavs(movieId: string): void {
     //checking if the title is already in favs
-    if (this.currentFavs.filter(function (e: any) { return e._id === movieId; }).length > 0) {
-      this.snackBar.open('Already in your favorite list', 'OK', { duration: 3000 });
-      return
+    if (
+      this.currentFavs.filter(function (e: any) {
+        return e._id === movieId;
+      }).length > 0
+    ) {
+      this.snackBar.open('Already in your favorite list', 'OK', {
+        duration: 3000,
+      });
+      return;
     } else {
       this.fetchApiData.addFavoriteMovies(movieId).subscribe((resp: any) => {
         this.getCurrentUser();
         this.ngOnInit();
-        this.snackBar.open('Added to your favorite list', 'OK', { duration: 3000 });
+        this.snackBar.open('Added to your favorite list', 'OK', {
+          duration: 3000,
+        });
       });
     }
   }
-  
+
   /**
    * use API end-point to remove user favorite
    * @function removeFromFavs
-   * @param MovieId {string}
+   * @param movieId {string}
    * @returns updated user's data in json format
    */
-  
 
   removeFav(movieId: string): void {
     this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((resp: any) => {
@@ -169,36 +187,21 @@ getMovies(): void {
     });
     this.ngOnInit();
   }
-  // removeFromFavs(movieId: string): void {
-  //   this.fetchApiData.deleteFavoriteMovies(movieId).subscribe((resp: any) => {
-  //     this.snackBar.open('Removed from favs', 'OK', { duration: 2000 });
-  //     this.getCurrentUser();
-  //     this.ngOnInit();
-  //     2000
-  //   });
-  // } 
 
   /**
    * check if the movie is the user's favorite?
-   * @param movieId 
+   * @param movieId
    * @returns boolean
    */
 
   favCheck(movieId: string): any {
     return this.currentFavs.some((id) => id === movieId);
   }
-  // favCheck(movieId: string): any {
-  //   let favIds = this.currentFavs.map((fav: any) => { return fav._id });
-  //   if (favIds.includes(movieId)) {
-  //     this.isInFavs = true;
-  //     return this.isInFavs;
-  //   };
-  // }
 
   /**
    * toggle add/remove user's favorite movie
-   * @Function add or remove a movie to/from user's favorite list 
-   * @param movie 
+   * @Function add or remove a movie to/from user's favorite list
+   * @param movie
    */
   toggleFavorite(movie: any): void {
     this.favCheck(movie._id)
